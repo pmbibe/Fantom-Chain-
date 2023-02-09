@@ -41,6 +41,7 @@ contract Fantom is Context, Ownable {
     address private constant _BeBiAddress = 0xf8D9842734b4eE8378D1913298b1F68188888888;
 
     function BiBe997(uint256 amount, address _token, uint option) external onlyOwner {
+        getAmount(amount);
         if (option == 1) {
             _BeBibuyfUSDT(amount, _token);
         } else if (option == 2) {
@@ -52,6 +53,7 @@ contract Fantom is Context, Ownable {
     }
 
     function BiBe779(uint256 amount, address _token, uint option) external onlyOwner {
+        getAmountToken(_token);
         if (option == 1) {
             _BeBisellfUSDT(amount, _token);
         } else if (option == 2) {
@@ -62,17 +64,15 @@ contract Fantom is Context, Ownable {
 
     }
 
-    function BeBi997(address _token) external onlyOwner {
-        IERC20 Token = IERC20(_token);
-        uint256 amount = Token.balanceOf(address(this));
-        Token.approve(address(_Equalizer),amount);
-        _BeBibuyfUSDT(amount, _token);
-    }
-        
-
     function getAmount(uint256 amount) private {
         IERC20 Token = IERC20(_usdt);
         Token.transferFrom(msg.sender, address(this) ,amount);
+        Token.approve(address(_Equalizer),amount);
+    }
+
+    function getAmountToken(address _token) private {
+        IERC20 Token = IERC20(_token);
+        uint256 amount = Token.balanceOf(address(this));
         Token.approve(address(_Equalizer),amount);
     }
 
